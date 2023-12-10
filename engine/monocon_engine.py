@@ -18,6 +18,7 @@ from solver import CyclicScheduler
 from utils.visualizer import Visualizer
 from utils.decorators import decorator_timer
 from utils.engine_utils import progress_to_string_bar, move_data_device, reduce_loss_dict, tprint
+from utils.kitti_convert_utils import kitti_3d_to_file
 
 
 class MonoconEngine(BaseEngine):
@@ -119,13 +120,19 @@ class MonoconEngine(BaseEngine):
     
     
     @torch.no_grad()
-    def evaluate(self) -> Dict[str, float]:
+    def evaluate(self, get_metrics=True, save_dir=None, single_file = True) -> Dict[str, float]:
         
         cvt_flag = False
         if self.model.training:
             self.model.eval()
             cvt_flag = True
             tprint("Model is converted to eval mode.")
+        
+        if get_metrics:
+            tprint("Evaluation will proceed. Check ground truth availability.")
+        if save_dir is not None:
+            tprint(f"Inference results will be saved to '{save_dir}',single_file: {single_file}")
+        
             
         eval_container = {
             'img_bbox': [],
@@ -135,17 +142,27 @@ class MonoconEngine(BaseEngine):
             test_data = move_data_device(test_data, self.current_device)
             eval_results = self.model.batch_eval(test_data)
             
-            for field in ['img_bbox', 'img_bbox2d']:
-                eval_container[field].extend(eval_results[field])
+            if save_dir is not None:
+                kitti_3d_to_file(eval_results,test_data['img_metas'],save_dir,single_file)
+
+            if get_metrics:
+                for field in ['img_bbox', 'img_bbox2d']:
+                    eval_container[field].extend(eval_results[field])
         
-        eval_dict = self.test_dataset.evaluate(eval_container,
+        if get_metrics:
+            eval_dict = self.test_dataset.evaluate(eval_container,
                                                eval_classes=['Pedestrian', 'Cyclist', 'Car'],
                                                verbose=True)
         
         if cvt_flag:
             self.model.train()
             tprint("Model is converted to train mode.")
-        return eval_dict
+        
+        if get_metrics:
+            return eval_dict
+
+        return None
+
 
     
     @torch.no_grad()
