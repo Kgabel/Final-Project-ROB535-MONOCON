@@ -1,4 +1,4 @@
-# A template repository for NA565 final project
+#ROB535 final project
 This repo is accommodated from [MonoCon](https://github.com/2gunsu/monocon-pytorch) for the NA565 final project. 
 
 After setting up the envionment and converting the final project dataset into the KITTI format, the training code should work directly. 
