@@ -73,7 +73,10 @@ The structure of the data files should be as below.
     ├── calib
     └── image_2
 ```
-
+Overall AP40@ easy moderate hard
+bbox AP40: 26.5682 26.8746 25.9696
+3d AP40: 0.5069 0.2026 0.1796
+aos AP40: 26.31 26.32 25.39
 
 
 ## Citation
