@@ -1,4 +1,4 @@
-#ROB535 final project
+**#ROB535 final project**
 This repo is accommodated from [MonoCon](https://github.com/2gunsu/monocon-pytorch) for the NA565 final project. 
 
 [You can find the report link here](https://github.com/Kgabel/Final-Project-ROB535-MONOCON/blob/c09d477149a8ffd56653db05a9f4e2a4ad64e8e4/Final_project_report.pdf)
