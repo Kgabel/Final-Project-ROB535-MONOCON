@@ -4,6 +4,12 @@ This repo is accommodated from [MonoCon](https://github.com/2gunsu/monocon-pytor
 [You can find the report link here](https://github.com/Kgabel/Final-Project-ROB535-MONOCON/blob/c09d477149a8ffd56653db05a9f4e2a4ad64e8e4/Final_project_report.pdf)
 
 
+Proposed Monocular 3-D object detection and modified monocular algorithm was implemented to calculate and localize 3D location of cars and their respective 3D bounding boxes in the input raw image data from camera. This project was a challenging problem as achieving a high accuracy required detecting vehicles in adversarial weather. To account for adverse weather, not only monocular’s configuration/paramters were modified but filters(nighttime and fog) were used to modify our train dataset to achieve AP score on testing sets.
+
+The method utilizes a modified MonoCon monocular 3D detection algorithm with a 34-layer DLA deep neural network backbone. It has regression heads to estimate 3D box center offsets, depth, dimensions, observation angle, etc. It also uses auxiliary task branches. To enable operation in adverse weather, the training dataset is augmented by applying adjustable synthetic fog and raindrop filters to simulate challenging visibility conditions. Specifically, a fog layer is blended with the original image based on an intensity parameter. Raindrop masks with randomized RGB intensities are overlaid. The fog layer with droplets is then blended back onto images. The model is retrained on this augmented dataset using a weighted multi-task loss function comprising heatmap focal loss, uncertainty-aware depth loss, dimension-aware L1 loss, cross entropy classification loss, and box offset L1 loss.
+
+![alt text](https://github.com/Kgabel/Final-Project-ROB535-MONOCON/blob/main/config/Screenshot%202023-12-31%2002154.png)
+
 After setting up the envionment and converting the final project dataset into the KITTI format, the training code should work directly. 
 ## Preparations
 
