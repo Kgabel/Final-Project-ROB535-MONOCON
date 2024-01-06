@@ -1,4 +1,4 @@
-**##ROB535 Final Project: Monocular 3D Object detection**
+#ROB535 Final Project: Monocular 3D Object detection
 
 This repo is accommodated from [MonoCon](https://github.com/2gunsu/monocon-pytorch) for the NA565 final project. 
 
